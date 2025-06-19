@@ -396,7 +396,7 @@ const Dashboard = () => {
                             </div>
                         </div>
                         <div className="flex flex-col sm:flex-row items-center gap-4 mt-4 sm:mt-0">
-                            <span className="text-gray-300 font-semibold text-lg">Email Storm:</span>
+                            <span className="text-gray-300 font-semibold text-lg">Mail Storm:</span>
                             <div className="flex flex-wrap gap-3">
                                 <a href="https://www.cubitdynamics.com/about-mailstorm" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-400 hover:text-blue-400 transition-colors">About</a>
                                 <a href="https://www.cubitdynamics.com/privacy-policy-mailstorm" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-400 hover:text-blue-400 transition-colors">Privacy Policy</a>
@@ -502,7 +502,7 @@ const Dashboard = () => {
                                 >
                                     <option value="all">All Apps</option>
                                     <option value="WA BOMB">WA BOMB</option>
-                                    <option value="Email Storm">Email Storm</option>
+                                    <option value="Email Storm">Mail Storm</option>
                                 </select>
 
                                 {/* View Toggle */}

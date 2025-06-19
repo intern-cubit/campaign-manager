@@ -117,7 +117,7 @@ export default function LandingPage() {
                                 <div className="relative bg-[rgba(30,30,30,0.8)] backdrop-blur-md p-4 sm:p-6 rounded-2xl border border-gray-800">
                                     <img
                                         src="https://placehold.co/600x400/2a2a3e/ffffff?text=Apps+Dashboard"
-                                        alt="WA BOMB & Email Storm Dashboard Preview"
+                                        alt="WA BOMB & Mail Storm Dashboard Preview"
                                         className="rounded-lg shadow-lg w-full h-auto"
                                         onError={(e) => { e.target.onerror = null; e.target.src="https://placehold.co/600x400/2a2a3e/ffffff?text=Apps+Preview" }}
                                     />
@@ -166,18 +166,18 @@ export default function LandingPage() {
                             },
                             {
                                 icon: Mail,
-                                title: 'Email Storm - Mass Emailing',
+                                title: 'Mail Storm - Mass Emailing',
                                 description: 'Launch high-volume email campaigns with personalized content and advanced scheduling options for business advertising.'
                             },
                             {
                                 icon: Key,
                                 title: 'Instant Key Generation',
-                                description: 'Securely generate and manage unique activation keys for both WA BOMB and Email Storm applications with ease.'
+                                description: 'Securely generate and manage unique activation keys for both WA BOMB and Mail Storm applications with ease.'
                             },
                             {
                                 icon: Download,
                                 title: 'Easy App Downloads',
-                                description: 'Quickly access and download the latest versions of WA BOMB and Email Storm directly from our platform.'
+                                description: 'Quickly access and download the latest versions of WA BOMB and Mail Storm directly from our platform.'
                             },
                         ].map((feature, index) => (
                             <div key={index} className="bg-[rgba(30,30,30,0.5)] backdrop-blur-md border border-gray-800 rounded-xl p-6 transition-all duration-300 hover:shadow-[0_0_15px_rgba(106,90,205,0.3)] hover:transform hover:scale-105">
@@ -210,7 +210,7 @@ export default function LandingPage() {
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-6 relative z-10">
                             {[
-                                { title: 'Download Apps', description: 'Get WA BOMB & Email Storm from our site.' },
+                                { title: 'Download Apps', description: 'Get WA BOMB & Mail Storm from our site.' },
                                 { title: 'Login / Get Key', description: 'Log in to your account and generate an activation key.' },
                                 { title: 'Activate Software', description: 'Use the generated key to activate your downloaded application.' },
                                 { title: 'Configure Campaign', description: 'Set up your messaging or email campaign within the app.' },
@@ -239,7 +239,7 @@ export default function LandingPage() {
                 <div className="max-w-4xl mx-auto text-center">
                     <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6">Ready to Power Your Campaigns?</h2>
                     <p className="text-base sm:text-lg text-gray-400 mb-8 max-w-3xl mx-auto">
-                        Download WA BOMB and Email Storm today and revolutionize your business advertising and outreach efforts.
+                        Download WA BOMB and Mail Storm today and revolutionize your business advertising and outreach efforts.
                     </p>
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                         <Link to={"/download-apps"} className="bg-[#6a5acd] hover:bg-[#5a4abd] text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 hover:shadow-[0_0_15px_rgba(106,90,205,0.3)] w-full sm:w-auto flex items-center justify-center">
@@ -261,7 +261,7 @@ export default function LandingPage() {
                             },
                             {
                                 title: 'Products',
-                                links: ['WA BOMB', 'Email Storm', 'Key Generator', 'API Documentation']
+                                links: ['WA BOMB', 'Mail Storm', 'Key Generator', 'API Documentation']
                             },
                             {
                                 title: 'Support',
