@@ -26,7 +26,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux'; // Re-import useSelector as requested, note: may require proper Redux setup in your environment
 import { motion, AnimatePresence, animate } from 'framer-motion';
-import AddDeviceModal from '../components/AddDeviceModal'; 
+import AddDeviceModal from '../components/AddDeviceModal';
 
 // Enhanced Stats Card Component
 const StatsCard = ({ title, value, icon, trend, color = "purple", subtitle }) => {
@@ -228,7 +228,7 @@ const DeviceCardSkeleton = ({ viewMode }) => (
 
 const Dashboard = () => {
     // Hardcoded BACKEND_URL to resolve 'import.meta.env' warning in this environment
-    const BACKEND_URL = 'http://localhost:5000';
+    const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
     const storedUser = localStorage.getItem('user');
     // Using useSelector as requested. If Redux is not set up in your broader application,
     // this line might cause issues. Ensure your app is wrapped in a <Provider> from 'react-redux'.
