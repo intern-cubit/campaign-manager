@@ -41,8 +41,8 @@ const AddDeviceModal = ({ isOpen, onClose }) => {
 
         try {
             const payload = {
-                macId,
-                motherboardSerial,
+                macId: macId.trim(),
+                motherboardSerial: motherboardSerial.trim(),
                 appName,
                 validityType,
             };

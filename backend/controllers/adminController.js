@@ -4,7 +4,7 @@ import { generateEmailStormActivationKey } from "../utils/generateEmailStormActi
 
 export const add_device = async (req, res) => {
     const { macId, motherboardSerial, name, appName, validityType, customValidityDate } = req.body;
-    const { id: adminId } = req.user; 
+    const { id: adminId } = req.user;
 
     try {
         if (!macId || !motherboardSerial || !appName || !validityType) {
@@ -29,14 +29,14 @@ export const add_device = async (req, res) => {
                 return res.status(400).json({ message: "Invalid custom validity date format." });
             }
 
-            parsedDate.setHours(23, 59, 59, 999); 
+            parsedDate.setHours(23, 59, 59, 999);
             if (parsedDate < new Date()) {
                 return res.status(400).json({ message: "Custom validity date cannot be in the past." });
             }
             expirationDate = parsedDate;
 
         } else if (validityType === "LIFETIME") {
-            expirationDate = new Date('9999-12-31T23:59:59Z'); // Effectively "lifetime"
+            expirationDate = new Date('9999-12-31T23:59:59Z');
         }
 
         const existingDevice = await Device.findOne({
@@ -55,17 +55,18 @@ export const add_device = async (req, res) => {
         } else if (appName === "Email Storm") {
             activationKey = generateEmailStormActivationKey(macId, motherboardSerial);
         }
+        console.log("Generated Activation Key:", activationKey);
 
         if (!activationKey) {
             return res.status(500).json({ message: "Failed to generate activation key." });
         }
-        
+
         const deviceData = {
             macId,
             motherboardSerial,
             activationKey,
             deviceStatus: "active",
-            expirationDate, 
+            expirationDate,
             appName,
             adminId,
         };
@@ -75,13 +76,19 @@ export const add_device = async (req, res) => {
         }
 
         const device = new Device(deviceData);
-        await device.save();
+        await device.save(); 
 
         return res.status(201).json({ device });
 
     } catch (error) {
         console.error("Add device error:", error);
-        if (error.name === 'ValidationError') {
+
+        if (error.code === 11000 && error.keyPattern && error.keyPattern.macId) {
+            return res.status(400).json({
+                message: `A device with Processor ID (MAC ID) '${error.keyValue.macId}' already exists. Processor ID must be unique.`,
+                errorCode: 'DUPLICATE_MAC_ID'
+            });
+        } else if (error.name === 'ValidationError') {
             return res.status(400).json({ message: error.message });
         }
         res.status(500).json({ message: "Server Error" });

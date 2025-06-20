@@ -5,12 +5,10 @@ const deviceSchema = new mongoose.Schema(
         macId: {
             type: String,
             required: true,
-            unique: true,
         },
         motherboardSerial: {
             type: String,
             required: true,
-            unique: true,
         },
         activationKey: {
             type: String,
