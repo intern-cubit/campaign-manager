@@ -17,10 +17,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get("/api/uptimerobot/status", (req, res) => {
-    res.status(200).json({ status: "Server is running" });
-});
-// Routes
 app.get("/uptimerobot/status", (req, res) => {
     res.status(200).json({ status: "Server is running" });
 });
