@@ -2,16 +2,16 @@ import Device from "../models/Device.js";
 
 export const checkActivation = async (req, res) => {
     try {
-        const { processorId, activationKey, motherboardSerial } = req.body;
+        const { processorId, motherboardSerial, appName } = req.body;
 
-        if (!processorId || !activationKey || !motherboardSerial) {
+        if (!processorId || !appName || !motherboardSerial) {
             return res.status(400).json({
                 success: false,
-                activationStatus: "Processor ID, activation key, and motherboard serial are required",
+                activationStatus: "Processor ID, app name, and motherboard serial are required",
             });
         }
 
-        const device = await Device.findOne({macId: processorId, activationKey, motherboardSerial});
+        const device = await Device.findOne({ macId: processorId, appName, motherboardSerial });
 
         if (!device) {
             return res.status(404).json({
@@ -20,15 +20,31 @@ export const checkActivation = async (req, res) => {
             });
         }
 
+        const currentDate = new Date();
+        currentDate.setHours(0, 0, 0, 0); 
+
+        if (device.expirationDate && currentDate > device.expirationDate) {
+            device.deviceStatus = "inactive";
+            await device.save(); 
+
+            return res.status(200).json({
+                success: true,
+                activationStatus: "inactive",
+                message: "Device license has expired.",
+            });
+        }
+
         res.status(200).json({
             success: true,
-            activationStatus: device.deviceStatus,
+            activationStatus: device.deviceStatus, 
         });
+
     } catch (error) {
+        console.error("Error in checkActivation:", error);
         res.status(500).json({
             success: false,
             activationStatus: "Error checking activation",
             error: error.message,
         });
     }
-}
+};
