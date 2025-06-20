@@ -9,7 +9,8 @@ const AddDeviceModal = ({ isOpen, onClose }) => {
     const [name, setName] = useState("");
     const [appName, setAppName] = useState("");
     const [validityType, setValidityType] = useState("");
-    
+    const [customValidityDate, setCustomValidityDate] = useState(""); // New state for custom date
+
     const [message, setMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
@@ -32,6 +33,12 @@ const AddDeviceModal = ({ isOpen, onClose }) => {
             return;
         }
 
+        if (validityType === "CUSTOM_DATE" && !customValidityDate) {
+            setMessage("❌ Please select a custom validity date.");
+            setIsLoading(false);
+            return;
+        }
+
         try {
             const payload = {
                 macId,
@@ -42,6 +49,10 @@ const AddDeviceModal = ({ isOpen, onClose }) => {
 
             if (name.trim() !== "") {
                 payload.name = name.trim();
+            }
+
+            if (validityType === "CUSTOM_DATE") {
+                payload.customValidityDate = customValidityDate;
             }
 
             const response = await fetch(`${BACKEND_URL}/api/admin/add-device`, {
@@ -66,6 +77,7 @@ const AddDeviceModal = ({ isOpen, onClose }) => {
                 setName("");
                 setAppName("");
                 setValidityType("");
+                setCustomValidityDate(""); // Reset custom date
                 setMessage("");
             }, 2000);
 
@@ -191,15 +203,15 @@ const AddDeviceModal = ({ isOpen, onClose }) => {
                             </div>
                         </div>
 
-                        {/* Validity Period Selection - Adjusted gap and padding */}
+                        {/* Validity Period Selection */}
                         <div>
                             <label className="block text-sm font-medium text-gray-300 mb-2">
                                 Validity Period
                             </label>
-                            <div className="grid grid-cols-2 gap-2 bg-gray-900/50 border border-gray-700 rounded-lg p-1"> {/* Increased gap-1 to gap-2 */}
+                            <div className="grid grid-cols-2 gap-2 bg-gray-900/50 border border-gray-700 rounded-lg p-1">
                                 <label
-                                    className={`text-center py-2.5 cursor-pointer rounded-md transition-colors duration-200 ${ /* Increased py-2 to py-2.5 */
-                                        validityType === "1_MONTH"
+                                    className={`text-center py-2.5 cursor-pointer rounded-md transition-colors duration-200 ${
+                                        validityType === "CUSTOM_DATE"
                                             ? "bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-md"
                                             : "text-gray-300 hover:bg-gray-700/50"
                                     }`}
@@ -207,17 +219,18 @@ const AddDeviceModal = ({ isOpen, onClose }) => {
                                     <input
                                         type="radio"
                                         name="validity"
-                                        value="1_MONTH"
-                                        checked={validityType === "1_MONTH"}
+                                        value="CUSTOM_DATE"
+                                        checked={validityType === "CUSTOM_DATE"}
                                         onChange={() => {
-                                            setValidityType("1_MONTH");
+                                            setValidityType("CUSTOM_DATE");
+                                            setCustomValidityDate(""); // Clear custom date when switching
                                         }}
                                         className="hidden"
                                     />
-                                    1 Month
+                                    Custom Date
                                 </label>
                                 <label
-                                    className={`text-center py-2.5 cursor-pointer rounded-md transition-colors duration-200 ${ /* Increased py-2 to py-2.5 */
+                                    className={`text-center py-2.5 cursor-pointer rounded-md transition-colors duration-200 ${
                                         validityType === "LIFETIME"
                                             ? "bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-md"
                                             : "text-gray-300 hover:bg-gray-700/50"
@@ -230,6 +243,7 @@ const AddDeviceModal = ({ isOpen, onClose }) => {
                                         checked={validityType === "LIFETIME"}
                                         onChange={() => {
                                             setValidityType("LIFETIME");
+                                            setCustomValidityDate(""); // Clear custom date when switching
                                         }}
                                         className="hidden"
                                     />
@@ -237,6 +251,21 @@ const AddDeviceModal = ({ isOpen, onClose }) => {
                                 </label>
                             </div>
                         </div>
+
+                        {/* Custom Date Input - only visible when CUSTOM_DATE is selected */}
+                        {validityType === "CUSTOM_DATE" && (
+                            <div>
+                                <label className="block text-sm font-medium text-gray-300 mb-2">
+                                    Select End Date
+                                </label>
+                                <input
+                                    type="date"
+                                    value={customValidityDate}
+                                    onChange={(e) => setCustomValidityDate(e.target.value)}
+                                    className="w-full px-4 py-3 bg-gray-900/50 border border-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                                />
+                            </div>
+                        )}
                     </div>
 
                     <div className="flex gap-3 pt-4">
