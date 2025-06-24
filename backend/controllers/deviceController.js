@@ -1,13 +1,13 @@
 import Device from "../models/Device.js";
 
 export const verifyDevice = async (req, res) => {
-    const { macId, motherboardSerial, activationKey } = req.body;
+    const { systemId, activationKey, appName } = req.body;
 
-    if (!macId || !activationKey || !motherboardSerial) {
+    if (!systemId || !activationKey || !appName) {
         return res.status(400).json({ message: "All fields are required" });
     }
 
-    const device = await Device.findOne({ macId, motherboardSerial, activationKey });
+    const device = await Device.findOne({ systemId, activationKey, appName });
     if (!device) {
         return res
             .status(400)
@@ -19,9 +19,9 @@ export const verifyDevice = async (req, res) => {
 };
 
 export const getDeviceDetails = async (req, res) => {
-    const { macId } = req.params;
+    const { systemId, appName } = req.body;
     try {
-        const device = await Device.findOne({ macId });
+        const device = await Device.findOne({ systemId, appName });
         if (!device) {
             return res.status(404).json({ message: "Device not found" });
         }

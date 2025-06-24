@@ -4,8 +4,8 @@ import { DownloadCloud, Smartphone, Mail, Info, ChevronLeft } from 'lucide-react
 import { useNavigate } from 'react-router-dom';
 
 const DownloadCenter = () => {
-    const WA_BOMB_DOWNLOAD_URL = "https://github.com/intern-cubit/wa-bomb/releases/download/v0.0.6/WA-BOMB-Setup-0.0.5.exe";
-    const EMAIL_STORM_DOWNLOAD_URL = "https://github.com/intern-cubit/mailstorm/releases/download/v0.0.7/MailStorm-Setup-0.0.6.exe";
+    const WA_BOMB_DOWNLOAD_URL = "https://github.com/intern-cubit/wa-bomb/releases/download/v0.0.7/WA-BOMB-Setup-0.0.5.exe";
+    const EMAIL_STORM_DOWNLOAD_URL = "https://github.com/intern-cubit/mailstorm/releases/download/v0.0.8/MailStorm-Setup-0.0.6.exe";
     const navigate = useNavigate();
 
     const appData = [

@@ -2,11 +2,7 @@ import mongoose from "mongoose";
 
 const deviceSchema = new mongoose.Schema(
     {
-        macId: {
-            type: String,
-            required: true,
-        },
-        motherboardSerial: {
+        systemId: {
             type: String,
             required: true,
         },
@@ -27,6 +23,10 @@ const deviceSchema = new mongoose.Schema(
             type: String,
             enum: ["active", "inactive"],
             default: "inactive",
+        },
+        deviceActivation: {
+            type: Boolean,
+            default: false,
         },
         expirationDate: {
             type: Date,

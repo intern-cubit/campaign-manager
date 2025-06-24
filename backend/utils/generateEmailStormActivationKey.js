@@ -1,10 +1,10 @@
-import crypto from "crypto"; 
+import crypto from "crypto";
 
-export const generateEmailStormActivationKey = (macId, motherboardSerial) => {
-    const input = `${macId}:${motherboardSerial}`.toUpperCase(); 
+export const generateEmailStormActivationKey = (systemId) => {
+    const input = `${systemId}`.toUpperCase();
 
     const hash = crypto
-        .createHash("sha512") 
+        .createHash("sha512")
         .update(input)
         .digest("hex")
         .toUpperCase();

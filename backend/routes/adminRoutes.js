@@ -6,6 +6,6 @@ const router = Router();
 
 router.get('/get-devices', authMiddleware, getDevices);
 router.post('/add-device', authMiddleware, add_device);
-router.delete('/delete-device/:macId', authMiddleware, deleteDevice);
+router.post('/delete-device', authMiddleware, deleteDevice);
 
 export default router;

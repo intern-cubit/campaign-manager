@@ -22,24 +22,25 @@ import {
     Search, // Added for potential future use or just for a more comprehensive icon set
     BarChart2, // Added for report section icon
 } from "lucide-react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function DeviceDetails() {
-    const { macId } = useParams();
+    const { systemId } = useParams();
+    const [searchParams] = useSearchParams();
+    const appName = searchParams.get("appName");
     const navigate = useNavigate();
 
     const [device, setDevice] = useState({
         _id: "",
-        macId: "",
+        systemId: "",
         activationKey: "",
         adminId: "",
         deviceStatus: "",
         createdAt: "",
         updatedAt: "",
         __v: 0,
-        appName: "", // Added appName to the device state
-        motherboardSerial: "", // Added motherboardSerial for explicit clarity
+        appName: "",
     });
 
     const [loading, setLoading] = useState(false);
@@ -48,9 +49,6 @@ export default function DeviceDetails() {
     const [isDeleting, setIsDeleting] = useState(false);
     const [deleteError, setDeleteError] = useState(null);
     const [isDeleted, setIsDeleted] = useState(false);
-    const [selectedDate, setSelectedDate] = useState("");
-    const [isDownloading, setIsDownloading] = useState(false);
-    const [downloadError, setDownloadError] = useState(null);
     const [copySuccess, setCopySuccess] = useState("");
 
     const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
@@ -59,12 +57,13 @@ export default function DeviceDetails() {
         const fetchDeviceDetails = async () => {
             setLoading(true);
             try {
-                const response = await fetch(`${BACKEND_URL}/api/device/${macId}`, {
-                    method: 'GET',
+                const response = await fetch(`${BACKEND_URL}/api/device/details`, {
+                    method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         authorization: `Bearer ${localStorage.getItem('token')}`,
-                    }
+                    },
+                    body: JSON.stringify({ systemId, appName: appName || "WA BOMB" }),
                 });
                 if (!response.ok) {
                     throw new Error("Network response was not ok");
@@ -75,10 +74,6 @@ export default function DeviceDetails() {
                 }
                 setDevice(data);
 
-                // Set default date to today
-                const today = new Date().toISOString().split('T')[0];
-                setSelectedDate(today);
-
                 setLoading(false);
             } catch (error) {
                 setError("Failed to fetch device details. Please try refreshing.");
@@ -87,7 +82,7 @@ export default function DeviceDetails() {
         };
 
         fetchDeviceDetails();
-    }, [macId, BACKEND_URL]); // Added BACKEND_URL to dependency array
+    }, [systemId, BACKEND_URL]); // Added BACKEND_URL to dependency array
 
     // Format date to be more readable
     const formatDate = (dateString) => {
@@ -167,84 +162,13 @@ export default function DeviceDetails() {
         navigate(-1);
     };
 
-    // Handle date change
-    const handleDateChange = (e) => {
-        setSelectedDate(e.target.value);
-    };
-
-    // Handle report download
-    const handleReportDownload = async () => {
-        if (!selectedDate) {
-            setDownloadError("Please select a date for the report.");
-            return;
-        }
-
-        setIsDownloading(true);
-        setDownloadError(null);
-
-        try {
-            const response = await fetch(`${BACKEND_URL}/api/device/download-report`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${localStorage.getItem('token')}`,
-                },
-                body: JSON.stringify({
-                    macId: device.macId,
-                    adminId: device.adminId, // Assuming adminId is needed for report generation
-                    date: selectedDate,
-                }),
-            });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error || "Failed to generate report");
-            }
-
-            const { downloadUrl } = await response.json();
-            await handleDownload(downloadUrl, device.macId, selectedDate);
-
-        } catch (error) {
-            setDownloadError(error.message);
-            console.error("Download error:", error);
-        } finally {
-            setIsDownloading(false);
-        }
-    };
-
-    const handleDownload = async (url, macId, date) => {
-        try {
-            const res = await fetch(url);
-            if (!res.ok) throw new Error('Could not fetch the report file');
-
-            const blob = await res.blob();
-            const blobUrl = window.URL.createObjectURL(blob);
-            const formattedDate = new Date(date).toISOString().split('T')[0]; // YYYY-MM-DD
-            const fileName = `report_${macId}_${formattedDate}.zip`; // Changed to .zip as per common practice for multiple files
-
-            const link = document.createElement('a');
-            link.href = blobUrl;
-            link.setAttribute('download', fileName);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-
-            window.URL.revokeObjectURL(blobUrl);
-            setCopySuccess("Report downloaded successfully!"); // Reusing copySuccess for general alerts
-            setTimeout(() => setCopySuccess(""), 3000);
-        } catch (err) {
-            console.error(err);
-            setDownloadError(`Download error: ${err.message}`);
-        }
-    };
-
     // Handle delete device
     const handleDeleteDevice = async () => {
         setIsDeleting(true);
         setDeleteError(null);
 
         try {
-            const response = await fetch(`${BACKEND_URL}/api/admin/delete-device/${macId}`, {
+            const response = await fetch(`${BACKEND_URL}/api/admin/delete-device/${systemId}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -332,7 +256,7 @@ export default function DeviceDetails() {
                                 </h1>
                                 <p className="text-gray-300 text-lg mt-2 flex items-center">
                                     <Hash size={18} className="mr-2 text-gray-500" />
-                                    Processor ID: <span className="font-mono ml-2 text-purple-300">{device.macId}</span>
+                                    System ID: <span className="font-mono ml-2 text-purple-300">{device.systemId}</span>
                                 </p>
                             </div>
                         </div>
@@ -389,13 +313,12 @@ export default function DeviceDetails() {
                                         </div>
 
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                            {/* Processor ID */}
                                             <InfoCard
-                                                label="Processor ID"
-                                                value={device.macId}
+                                                label="System ID"
+                                                value={device.systemId}
                                                 icon={<Wifi size={20} className="text-purple-400" />}
-                                                onCopy={() => copyToClipboard(device.macId, "Processor ID")}
-                                                copySuccess={copySuccess === "Processor ID"}
+                                                onCopy={() => copyToClipboard(device.systemId, "System ID")}
+                                                copySuccess={copySuccess === "System ID"}
                                             />
 
                                             {/* Activation Key */}
@@ -417,15 +340,6 @@ export default function DeviceDetails() {
                                                     copySuccess={copySuccess === "Application Name"}
                                                 />
                                             )}
-
-                                            {/* Motherboard Serial */}
-                                            <InfoCard
-                                                label="Motherboard Serial"
-                                                value={device.motherboardSerial || device._id}
-                                                icon={<Hash size={20} className="text-purple-400" />}
-                                                onCopy={() => copyToClipboard(device.motherboardSerial || device._id, "Motherboard Serial")}
-                                                copySuccess={copySuccess === "Motherboard Serial"}
-                                            />
                                         </div>
                                     </motion.div>
 
@@ -575,8 +489,8 @@ export default function DeviceDetails() {
                                 </p>
 
                                 <div className="bg-gray-700/50 rounded-lg p-4 border border-gray-600/50 mb-6">
-                                    <p className="text-sm text-gray-400 mb-1">Device Processor ID:</p>
-                                    <p className="font-mono text-yellow-400 break-all text-lg font-semibold">{device.macId}</p>
+                                    <p className="text-sm text-gray-400 mb-1">Device System ID:</p>
+                                    <p className="font-mono text-yellow-400 break-all text-lg font-semibold">{device.systemId}</p>
                                 </div>
 
                                 {deleteError && (

@@ -111,7 +111,7 @@ const DeviceCard = memo(({ device, index, viewMode }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.05 }}
             whileHover={{ y: viewMode === 'list' ? 0 : -2, scale: viewMode === 'list' ? 1.01 : 1.02 }}
-            onClick={() => navigate(`/device/${device.macId}`)}
+            onClick={() => navigate(`/device/${device.systemId}?appName=${device.appName}`)}
         >
             {/* Header / Main Info */}
             <div className={`flex items-start ${viewMode === 'list' ? 'flex-grow' : 'justify-between'} mb-4 ${viewMode === 'list' ? 'mb-0 mr-4' : ''}`}>
@@ -121,9 +121,9 @@ const DeviceCard = memo(({ device, index, viewMode }) => {
                     </div>
                     <div>
                         <h3 className="font-mono text-base lg:text-lg font-semibold text-white group-hover:text-purple-300 transition-colors">
-                            {device.name || device.macId}
+                            {device.name || device.systemId}
                         </h3>
-                        <p className="text-xs text-gray-400">{device.name ? device.macId : "Device ID"}</p>
+                        <p className="text-xs text-gray-400">{device.name ? device.systemId : "Device ID"}</p>
                     </div>
                 </div>
                 {viewMode === 'grid' && (
@@ -273,7 +273,7 @@ const Dashboard = () => {
 
         if (searchTerm) {
             filtered = filtered.filter(device =>
-                device.macId.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                device.systemId.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 (device.name && device.name.toLowerCase().includes(searchTerm.toLowerCase()))
             );
         }
@@ -543,7 +543,7 @@ const Dashboard = () => {
                                     transition={{ duration: 0.2 }}
                                 >
                                     {filteredDevices.map((device, index) => (
-                                        <DeviceCard key={device.macId} device={device} index={index} viewMode={viewMode} />
+                                        <DeviceCard key={device.systemId} device={device} index={index} viewMode={viewMode} />
                                     ))}
                                 </motion.div>
                             </AnimatePresence>

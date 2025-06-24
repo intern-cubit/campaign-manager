@@ -5,6 +5,6 @@ import authMiddleware from '../middleware/authMiddleware.js';
 const router = Router();
 
 router.post('/verify-device', verifyDevice);
-router.get('/:macId', getDeviceDetails); 
+router.post('/details', getDeviceDetails); 
 
 export default router;

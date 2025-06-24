@@ -4,8 +4,7 @@ import { X } from "lucide-react";
 import { addDeviceSuccess } from "../features/deviceSlice";
 
 const AddDeviceModal = ({ isOpen, onClose }) => {
-    const [macId, setMacId] = useState("");
-    const [motherboardSerial, setMotherboardSerial] = useState("");
+    const [systemId, setSystemId] = useState("");
     const [name, setName] = useState("");
     const [appName, setAppName] = useState("");
     const [validityType, setValidityType] = useState("");
@@ -41,8 +40,7 @@ const AddDeviceModal = ({ isOpen, onClose }) => {
 
         try {
             const payload = {
-                macId: macId.trim(),
-                motherboardSerial: motherboardSerial.trim(),
+                systemId: systemId.trim(),
                 appName,
                 validityType,
             };
@@ -72,8 +70,7 @@ const AddDeviceModal = ({ isOpen, onClose }) => {
             dispatch(addDeviceSuccess(data.device));
             setTimeout(() => {
                 onClose();
-                setMacId("");
-                setMotherboardSerial("");
+                setSystemId("");
                 setName("");
                 setAppName("");
                 setValidityType("");
@@ -113,35 +110,18 @@ const AddDeviceModal = ({ isOpen, onClose }) => {
                 )}
 
                 <div className="space-y-4">
-                    {/* Processor ID and Motherboard Serial - Side by side */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label className="block text-sm font-medium text-gray-300 mb-2">
-                                Processor ID
-                            </label>
-                            <input
-                                type="text"
-                                value={macId}
-                                onChange={(e) => setMacId(e.target.value)}
-                                placeholder="e.g., PROC123456789"
-                                required
-                                className="w-full px-4 py-3 bg-gray-900/50 border border-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                            />
-                        </div>
-
-                        <div>
-                            <label className="block text-sm font-medium text-gray-300 mb-2">
-                                Motherboard Serial
-                            </label>
-                            <input
-                                type="text"
-                                value={motherboardSerial}
-                                onChange={(e) => setMotherboardSerial(e.target.value)}
-                                placeholder="e.g., MB987654321"
-                                required
-                                className="w-full px-4 py-3 bg-gray-900/50 border border-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                            />
-                        </div>
+                    <div>
+                        <label className="block text-sm font-medium text-gray-300 mb-2">
+                            System ID
+                        </label>
+                        <input
+                            type="text"
+                            value={systemId}
+                            onChange={(e) => setSystemId(e.target.value)}
+                            placeholder="e.g., PROC123456789"
+                            required
+                            className="w-full px-4 py-3 bg-gray-900/50 border border-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                        />
                     </div>
 
                     {/* Name (Optional) - Full width */}
@@ -167,11 +147,10 @@ const AddDeviceModal = ({ isOpen, onClose }) => {
                             </label>
                             <div className="flex bg-gray-900/50 border border-gray-700 rounded-lg p-1">
                                 <label
-                                    className={`flex-1 text-center py-2 cursor-pointer rounded-md transition-colors duration-200 ${
-                                        appName === "WA BOMB"
+                                    className={`flex-1 text-center py-2 cursor-pointer rounded-md transition-colors duration-200 ${appName === "WA BOMB"
                                             ? "bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-md"
                                             : "text-gray-300 hover:bg-gray-700/50"
-                                    }`}
+                                        }`}
                                 >
                                     <input
                                         type="radio"
@@ -184,11 +163,10 @@ const AddDeviceModal = ({ isOpen, onClose }) => {
                                     WA BOMB
                                 </label>
                                 <label
-                                    className={`flex-1 text-center py-2 cursor-pointer rounded-md transition-colors duration-200 ${
-                                        appName === "Email Storm"
+                                    className={`flex-1 text-center py-2 cursor-pointer rounded-md transition-colors duration-200 ${appName === "Email Storm"
                                             ? "bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-md"
                                             : "text-gray-300 hover:bg-gray-700/50"
-                                    }`}
+                                        }`}
                                 >
                                     <input
                                         type="radio"
@@ -210,11 +188,10 @@ const AddDeviceModal = ({ isOpen, onClose }) => {
                             </label>
                             <div className="grid grid-cols-2 gap-2 bg-gray-900/50 border border-gray-700 rounded-lg p-1">
                                 <label
-                                    className={`text-center py-2.5 cursor-pointer rounded-md transition-colors duration-200 ${
-                                        validityType === "CUSTOM_DATE"
+                                    className={`text-center py-2.5 cursor-pointer rounded-md transition-colors duration-200 ${validityType === "CUSTOM_DATE"
                                             ? "bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-md"
                                             : "text-gray-300 hover:bg-gray-700/50"
-                                    }`}
+                                        }`}
                                 >
                                     <input
                                         type="radio"
@@ -230,11 +207,10 @@ const AddDeviceModal = ({ isOpen, onClose }) => {
                                     Custom Date
                                 </label>
                                 <label
-                                    className={`text-center py-2.5 cursor-pointer rounded-md transition-colors duration-200 ${
-                                        validityType === "LIFETIME"
+                                    className={`text-center py-2.5 cursor-pointer rounded-md transition-colors duration-200 ${validityType === "LIFETIME"
                                             ? "bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-md"
                                             : "text-gray-300 hover:bg-gray-700/50"
-                                    }`}
+                                        }`}
                                 >
                                     <input
                                         type="radio"

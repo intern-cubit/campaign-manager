@@ -38,19 +38,19 @@ const App = () => {
                     // element={!isAuth ? <ForgotPassword /> : isAdmin ? <Navigate to={"/admin/dashboard"} /> : <Navigate to={"/dashboard"} />}
                     element={<ForgotPassword />}
                 />
-                <Route 
+                <Route
                     path="/dashboard"
                     // element={isAuth ? <Dashboard /> : <Navigate to={"/login"} />}
                     element={<Dashboard />}
                 />
                 <Route
-                    path="/device/:macId"
-                    // element={isAuth ? <DeviceDetails /> : <Navigate to={"/login"} />}
+                    path="/device/:systemId"
                     element={<DeviceDetails />}
                 />
+
                 <Route
-                    path = "/download-apps"
-                    element={<DownloadCenter /> }
+                    path="/download-apps"
+                    element={<DownloadCenter />}
                 />
             </Routes>
         </BrowserRouter>

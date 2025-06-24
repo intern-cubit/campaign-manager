@@ -1,7 +1,7 @@
 import crypto from "crypto"; 
 
-export const generateWabombActivationKey = (macId, motherboardSerial) => {
-    const input = `${macId}:${motherboardSerial}`.toUpperCase(); 
+export const generateWabombActivationKey = (systemId) => {
+    const input = `${systemId}`.toUpperCase(); 
 
     const hash = crypto
         .createHash("sha256")

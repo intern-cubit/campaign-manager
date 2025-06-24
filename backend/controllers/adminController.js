@@ -3,11 +3,11 @@ import { generateWabombActivationKey } from "../utils/generateWabombActivationKe
 import { generateEmailStormActivationKey } from "../utils/generateEmailStormActivationKey.js";
 
 export const add_device = async (req, res) => {
-    const { macId, motherboardSerial, name, appName, validityType, customValidityDate } = req.body;
+    const { systemId, name, appName, validityType, customValidityDate } = req.body;
     const { id: adminId } = req.user;
 
     try {
-        if (!macId || !motherboardSerial || !appName || !validityType) {
+        if (!systemId || !appName || !validityType) {
             return res.status(400).json({ message: "All required fields are missing." });
         }
 
@@ -40,20 +40,19 @@ export const add_device = async (req, res) => {
         }
 
         const existingDevice = await Device.findOne({
-            macId,
-            motherboardSerial,
+            systemId,
             appName,
         });
 
         if (existingDevice) {
-            return res.status(400).json({ message: `Device with Processor ID '${macId}', Motherboard Serial '${motherboardSerial}', and App '${appName}' already exists.` });
+            return res.status(400).json({ message: `Device with System ID ${systemId}', and App '${appName}' already exists.` });
         }
 
         let activationKey;
         if (appName === "WA BOMB") {
-            activationKey = generateWabombActivationKey(macId, motherboardSerial);
+            activationKey = generateWabombActivationKey(systemId);
         } else if (appName === "Email Storm") {
-            activationKey = generateEmailStormActivationKey(macId, motherboardSerial);
+            activationKey = generateEmailStormActivationKey(systemId);
         }
         console.log("Generated Activation Key:", activationKey);
 
@@ -62,8 +61,7 @@ export const add_device = async (req, res) => {
         }
 
         const deviceData = {
-            macId,
-            motherboardSerial,
+            systemId,
             activationKey,
             deviceStatus: "active",
             expirationDate,
@@ -83,9 +81,9 @@ export const add_device = async (req, res) => {
     } catch (error) {
         console.error("Add device error:", error);
 
-        if (error.code === 11000 && error.keyPattern && error.keyPattern.macId) {
+        if (error.code === 11000 && error.keyPattern && error.keyPattern.systemId) {
             return res.status(400).json({
-                message: `A device with Processor ID (MAC ID) '${error.keyValue.macId}' already exists. Processor ID must be unique.`,
+                message: `A device with System ID '${error.keyValue.systemId}' already exists. System ID must be unique.`,
                 errorCode: 'DUPLICATE_MAC_ID'
             });
         } else if (error.name === 'ValidationError') {
@@ -97,11 +95,12 @@ export const add_device = async (req, res) => {
 
 export const deleteDevice = async (req, res) => {
     const { id: adminId } = req.user;
-    const { macId } = req.params;
+    const { systemId, appName } = req.body;
 
     try {
         const device = await Device.findOneAndDelete({
-            macId,
+            systemId,
+            appName,
             adminId,
         });
         if (!device) {
