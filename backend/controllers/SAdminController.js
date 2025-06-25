@@ -14,9 +14,11 @@ export const checkActivation = async (req, res) => {
         const device = await Device.findOne({ systemId, appName });
 
         if (!device) {
-            return res.status(404).json({
+            return res.status(201).json({
                 success: false,
                 activationStatus: "Device not found",
+                deviceActivation: false,
+                message: "Device Not Found"
             });
         }
 
@@ -25,10 +27,12 @@ export const checkActivation = async (req, res) => {
 
         if (device.expirationDate && currentDate > device.expirationDate) {
             device.deviceStatus = "inactive";
+            device.deviceActivation = false
             await device.save();
 
             return res.status(200).json({
                 success: true,
+                deviceActivation: false,
                 activationStatus: "inactive",
                 message: "Device license has expired.",
             });
