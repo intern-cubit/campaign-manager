@@ -168,12 +168,13 @@ export default function DeviceDetails() {
         setDeleteError(null);
 
         try {
-            const response = await fetch(`${BACKEND_URL}/api/admin/delete-device/${systemId}`, {
-                method: 'DELETE',
+            const response = await fetch(`${BACKEND_URL}/api/admin/delete-device`, {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     authorization: `Bearer ${localStorage.getItem('token')}`,
-                }
+                },
+                body: JSON.stringify({ systemId: device.systemId, appName: device.appName }),
             });
 
             if (!response.ok) {
