@@ -1,6 +1,7 @@
 import Device from "../models/Device.js";
 import { generateWabombActivationKey } from "../utils/generateWabombActivationKey.js";
 import { generateEmailStormActivationKey } from "../utils/generateEmailStormActivationKey.js";
+import { generateCubiViewActivationKey } from "../utils/generateCubiViewActivationKey.js"; 
 
 export const add_device = async (req, res) => {
     const { systemId, name, appName, validityType, customValidityDate } = req.body;
@@ -11,8 +12,8 @@ export const add_device = async (req, res) => {
             return res.status(400).json({ message: "All required fields are missing." });
         }
 
-        if (appName !== "WA BOMB" && appName !== "Email Storm") {
-            return res.status(400).json({ message: "Invalid app type. Must be 'WA BOMB' or 'Email Storm'." });
+        if (appName !== "WA BOMB" && appName !== "Email Storm" && appName !== "Cubi-View") {
+            return res.status(400).json({ message: "Invalid app type. Must be 'WA BOMB', 'Email Storm' or 'Cubi-view'." });
         }
 
         if (validityType !== "CUSTOM_DATE" && validityType !== "LIFETIME") {
@@ -53,6 +54,8 @@ export const add_device = async (req, res) => {
             activationKey = generateWabombActivationKey(systemId);
         } else if (appName === "Email Storm") {
             activationKey = generateEmailStormActivationKey(systemId);
+        } else if (appName === "Cubi-View") {
+            activationKey = generateCubiViewActivationKey(systemId); // Assuming same key generation for Cubi-View
         }
         console.log("Generated Activation Key:", activationKey);
 

@@ -166,8 +166,8 @@ const DeviceCard = memo(({ device, index, viewMode }) => {
                 <div className="mb-4">
                     <p className="text-xs text-gray-400 mb-1">Application</p>
                     <span className={`px-3 py-1 rounded-full text-sm font-semibold ${device.appName === 'WA BOMB' ? 'bg-green-600/30 text-green-300' :
-                        device.appName === 'Email Storm' ? 'bg-blue-600/30 text-blue-300' :
-                            'bg-gray-600/30 text-gray-300'
+                        device.appName === 'Email Storm' ? 'bg-blue-600/30 text-blue-300' : device.appName === 'Cubi-View' ? 'bg-red-600/30 text-red-300' 
+                            : 'bg-gray-600/30 text-gray-300'
                         } border border-gray-700/50`}>
                         {device.appName || 'N/A'}
                     </span>
@@ -403,6 +403,14 @@ const Dashboard = () => {
                                 <a href="https://www.cubitdynamics.com/contact-us-mailstorm" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-400 hover:text-blue-400 transition-colors">Contact Us</a>
                             </div>
                         </div>
+                        <div className="flex flex-col sm:flex-row items-center gap-4 mt-4 sm:mt-0">
+                            <span className="text-gray-300 font-semibold text-lg">Cubi-View</span>
+                            <div className="flex flex-wrap gap-3">
+                                <a href="https://www.cubitdynamics.com/about-cubiview" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-400 hover:text-blue-400 transition-colors">About</a>
+                                <a href="https://www.cubitdynamics.com/privacy-policy-cubiview" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-400 hover:text-blue-400 transition-colors">Privacy Policy</a>
+                                <a href="https://www.cubitdynamics.com/contact-us-cubiview" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-400 hover:text-blue-400 transition-colors">Contact Us</a>
+                            </div>
+                        </div>
                     </div>
                 </motion.div>
 
@@ -503,6 +511,7 @@ const Dashboard = () => {
                                     <option value="all">All Apps</option>
                                     <option value="WA BOMB">WA BOMB</option>
                                     <option value="Email Storm">Mail Storm</option>
+                                    <option value="Cubi-View">Cubi-View</option>
                                 </select>
 
                                 {/* View Toggle */}

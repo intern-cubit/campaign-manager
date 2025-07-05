@@ -100,7 +100,7 @@ export default function LandingPage() {
                                 Unlock Your Campaigns with <span className="text-[#6a5acd] block sm:inline">Powerful Activation Keys</span>
                             </h1>
                             <p className="text-base sm:text-lg md:text-xl text-gray-300 mb-8 max-w-2xl mx-auto lg:mx-0">
-                                Generate secure activation keys for WA BOMB and Email Storm – your go-to tools for effective business advertising and marketing campaigns.
+                                Generate secure activation keys for WA BOMB, Email Storm and Cubi-View – your go-to tools for effective business advertising and marketing campaigns.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                                 <Link to={"/download-apps"} className="bg-[#6a5acd] hover:bg-[#5a4abd] text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 hover:shadow-[0_0_15px_rgba(106,90,205,0.3)] flex items-center justify-center">
@@ -239,7 +239,7 @@ export default function LandingPage() {
                 <div className="max-w-4xl mx-auto text-center">
                     <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6">Ready to Power Your Campaigns?</h2>
                     <p className="text-base sm:text-lg text-gray-400 mb-8 max-w-3xl mx-auto">
-                        Download WA BOMB and Mail Storm today and revolutionize your business advertising and outreach efforts.
+                        Download WA BOMB, Mail Storm and Cubi-View today and revolutionize your business advertising and outreach efforts.
                     </p>
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                         <Link to={"/download-apps"} className="bg-[#6a5acd] hover:bg-[#5a4abd] text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 hover:shadow-[0_0_15px_rgba(106,90,205,0.3)] w-full sm:w-auto flex items-center justify-center">

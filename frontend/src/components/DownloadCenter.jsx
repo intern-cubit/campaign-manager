@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 const DownloadCenter = () => {
     const WA_BOMB_DOWNLOAD_URL = "https://github.com/intern-cubit/wa-bomb/releases/download/v0.0.9/WA-BOMB-Setup-0.0.5.exe";
     const EMAIL_STORM_DOWNLOAD_URL = "https://github.com/intern-cubit/mailstorm/releases/download/v0.0.9/MailStorm-Setup-0.0.6.exe";
+    const Cubi_View_DOWNLOAD_URL = "";
     const navigate = useNavigate();
 
     const appData = [
@@ -28,6 +29,16 @@ const DownloadCenter = () => {
             aboutUrl: 'https://www.cubitdynamics.com/about-mailstorm',
             privacyUrl: 'https://www.cubitdynamics.com/privacy-policy-mailstorm',
             contactUrl: 'https://www.cubitdynamics.com/contact-us-mailstorm',
+        },
+        {
+            id: 'cubi-view',
+            name: 'Cubi-View',
+            description: 'Launch effective email marketing campaigns with advanced scheduling and tracking.',
+            icon: <Mail size={40} className="text-blue-400" />,
+            downloadUrl: Cubi_View_DOWNLOAD_URL,
+            aboutUrl: 'https://www.cubitdynamics.com/about-cubiview',
+            privacyUrl: 'https://www.cubitdynamics.com/privacy-policy-cubiview',
+            contactUrl: 'https://www.cubitdynamics.com/contact-us-cubiview',
         },
     ];
 

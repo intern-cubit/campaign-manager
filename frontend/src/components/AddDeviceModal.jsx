@@ -138,9 +138,7 @@ const AddDeviceModal = ({ isOpen, onClose }) => {
                         />
                     </div>
 
-                    {/* App Name and Validity Period - Side by side */}
                     <div className="grid gap-4">
-                        {/* App Name Selection */}
                         <div>
                             <label className="block text-sm font-medium text-gray-300 mb-2">
                                 App Name
@@ -148,8 +146,8 @@ const AddDeviceModal = ({ isOpen, onClose }) => {
                             <div className="flex bg-gray-900/50 border border-gray-700 rounded-lg p-1">
                                 <label
                                     className={`flex-1 text-center py-2 cursor-pointer rounded-md transition-colors duration-200 ${appName === "WA BOMB"
-                                            ? "bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-md"
-                                            : "text-gray-300 hover:bg-gray-700/50"
+                                        ? "bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-md"
+                                        : "text-gray-300 hover:bg-gray-700/50"
                                         }`}
                                 >
                                     <input
@@ -164,8 +162,8 @@ const AddDeviceModal = ({ isOpen, onClose }) => {
                                 </label>
                                 <label
                                     className={`flex-1 text-center py-2 cursor-pointer rounded-md transition-colors duration-200 ${appName === "Email Storm"
-                                            ? "bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-md"
-                                            : "text-gray-300 hover:bg-gray-700/50"
+                                        ? "bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-md"
+                                        : "text-gray-300 hover:bg-gray-700/50"
                                         }`}
                                 >
                                     <input
@@ -178,6 +176,22 @@ const AddDeviceModal = ({ isOpen, onClose }) => {
                                     />
                                     Email Storm
                                 </label>
+                                <label
+                                    className={`flex-1 text-center py-2 cursor-pointer rounded-md transition-colors duration-200 ${appName === "Cubi-View"
+                                        ? "bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-md"
+                                        : "text-gray-300 hover:bg-gray-700/50"
+                                        }`}
+                                >
+                                    <input
+                                        type="radio"
+                                        name="appName"
+                                        value="Cubi-View"
+                                        checked={appName === "Cubi-View"}
+                                        onChange={() => setAppName("Cubi-View")}
+                                        className="hidden"
+                                    />
+                                    Cubi-View
+                                </label>
                             </div>
                         </div>
 
@@ -189,8 +203,8 @@ const AddDeviceModal = ({ isOpen, onClose }) => {
                             <div className="grid grid-cols-2 gap-2 bg-gray-900/50 border border-gray-700 rounded-lg p-1">
                                 <label
                                     className={`text-center py-2.5 cursor-pointer rounded-md transition-colors duration-200 ${validityType === "CUSTOM_DATE"
-                                            ? "bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-md"
-                                            : "text-gray-300 hover:bg-gray-700/50"
+                                        ? "bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-md"
+                                        : "text-gray-300 hover:bg-gray-700/50"
                                         }`}
                                 >
                                     <input
@@ -208,8 +222,8 @@ const AddDeviceModal = ({ isOpen, onClose }) => {
                                 </label>
                                 <label
                                     className={`text-center py-2.5 cursor-pointer rounded-md transition-colors duration-200 ${validityType === "LIFETIME"
-                                            ? "bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-md"
-                                            : "text-gray-300 hover:bg-gray-700/50"
+                                        ? "bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-md"
+                                        : "text-gray-300 hover:bg-gray-700/50"
                                         }`}
                                 >
                                     <input

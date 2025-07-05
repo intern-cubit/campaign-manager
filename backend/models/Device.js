@@ -35,7 +35,7 @@ const deviceSchema = new mongoose.Schema(
         appName:{
             type: String,
             required: true,
-            enum: ["WA BOMB", "Email Storm"],
+            enum: ["WA BOMB", "Email Storm", "Cubi-View"],
         }
     },
     { timestamps: true }
